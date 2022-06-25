@@ -19,7 +19,7 @@ package:
 
 functions:
   send-recipe-email:
-    handler: send_reccipe_email.handler
+    handler: send_recipe_email.handler
     events:
       - schedule: rate(7 days)
     environment:
