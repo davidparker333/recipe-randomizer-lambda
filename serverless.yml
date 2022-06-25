@@ -1,0 +1,29 @@
+service: recipe-randomizer-lambda
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: app
+  region: us-west-2
+
+custom:
+  config: ${file(./config.json)}
+
+package:
+  exclude:
+    - config.json
+  include:
+    - packages/*
+
+functions:
+  send-recipe-email:
+    handler: send_reccipe_email.handler
+    events:
+      - schedule: rate(7 days)
+    environment:
+      db: ${self:custom.config.db}
+
+plugins:
+  - serverless-python-requirements
